@@ -1,0 +1,1 @@
+;; This script provides: keybinds which apply to WSL windows

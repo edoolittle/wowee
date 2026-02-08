@@ -25,6 +25,16 @@ open_browser() {
 }
 
 
+;; ----------------------------
+;; Alt Keys Don't Activate Menu
+;; ----------------------------
+
+;; see https://www.autohotkey.com/docs/v2/lib/A_MenuMaskKey.htm
+
+~LWin::Send "{Blind}{vkE8}"
+~RWin::Send "{Blind}{vkE8}"
+
+
 ;; ---------------------
 ;; Hyper Key is CapsLock
 ;; ---------------------

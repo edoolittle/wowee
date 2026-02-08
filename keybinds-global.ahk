@@ -17,11 +17,11 @@ quit_window() {
 }
 
 open_emacs() {
-        Run('cmd.exe /c "C:\Users\jimbo\source\emacs-30.0\start.bat"', , "Hide")
+        Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
 }
 
 open_browser() {
-        Run('cmd.exe /c "C:\Program Files\Mozilla Firefox\firefox.exe"', , "Hide")
+        Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
 
 

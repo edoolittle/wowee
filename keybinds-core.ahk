@@ -1,6 +1,4 @@
-;; This script provides: default keybinds
-
-; #HotIf !WinActive("ahk_class Emacs")
+;; This script provides: keybinds which apply to non-WSL windows
 
 ;; -----------
 ;; M- bindings

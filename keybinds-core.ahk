@@ -29,6 +29,7 @@
 ^+a::move_beginning_of_line()
 ^d::delete_char()
 ^v::scroll_down()
+^w::kill_ring_cut()
 ^y::yank()
 ^/::undo_only()
 ^k::kill_line()

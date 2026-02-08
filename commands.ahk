@@ -181,6 +181,11 @@ kill_ring_save() {
         command_simple("^c{Escape}", 1, 1)
 }
 
+kill_ring_cut() {
+    quit()
+    command_simple("^x{Escape}", 1, 1)
+}
+
 kill_line() {
     command_simple("{Shift down}{End}{Shift up}^x", 1, 0)
 }

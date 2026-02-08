@@ -24,20 +24,32 @@ open_browser() {
         Run('cmd.exe /c "C:\Program Files\Mozilla Firefox\firefox.exe"', , "Hide")
 }
 
+
+;; ---------------------
+;; Hyper Key is CapsLock
+;; ---------------------
+
+;; CapsLock off
+SetCapsLockState("AlwaysOff")
+;; Shift+CapsLock performs CapsLock function
++CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
+
 ;; -------------------
 ;; Workspace Switching
 ;; -------------------
 
-#i::next_workspace()
-#u::prev_workspace()
+CapsLock & i::next_workspace()
+CapsLock & u::prev_workspace()
 
 ;; ---------------
 ;; Window commands
 ;; ---------------
-#q::quit_window()
+
+CapsLock & q::quit_window()
 
 ;; --------------------
 ;; Startup Applications
 ;; --------------------
-#m::open_emacs()
-#n::open_browser()
+
+CapsLock & m::open_emacs()
+CapsLock & n::open_browser()

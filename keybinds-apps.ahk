@@ -2,6 +2,22 @@
 ;; Application Specific
 ;; ----------------------------------------
 
+
+;; ---------
+;; GNU Emacs
+;; ---------
+
+#HotIf WinActive("(GNU Emacs)")
+$#i::Send("{F9}i")    ;; s-i   opens gnome-terminal in current directory in emacs
+;; $#!m behaving oddly, inserting tabs??
+;; $#m reserved for minimze window
+;; $!m unmappable -- Windows uses for some gaming panel
+$#^m::Send("{F9}^m")  ;; C-s-m removes ^M from emacs buffer
+$#u::Send("{F9}u")    ;; s-u   Sudoku in emacs
+$#.::Send("{F9}.")    ;; s-.   emoji chooser in emacs
+#HotIf
+
+
 ;; -------------
 ;; Visual Studio
 ;; -------------
@@ -14,27 +30,28 @@
 ;; Control+p Control+/ : Text Editor : Toggle Comment Line
 ;; Control+p Control+3 : Text Editor : New Vertical Tab Group
 
-#HotIf WinActive("ahk_exe devenv.exe")
-^r::isearch("^p^r", "{Shift down}{F3}{Shift up}")
-^s::isearch("^p^s", "{F3}")
-^l::recenter_line()
-^i::indent_line()
-^+i::indent_line()
-!;::comment_line("^p^/")
-!+;::comment_line("^p^/")
-^b::return
-;; -----------
-;; C-x bindings
-;; -----------
-; ^x:: {
-;         hook := InputHook("L1", "{3}")
-;         hook.Start()
-;         hook.Wait()
-;         if (hook.EndKey == "3") {
-;                 split_window_vertically()
-;         }
-;         hook := ""
-; }
+; #HotIf WinActive("ahk_exe devenv.exe")
+; ^r::isearch("^p^r", "{Shift down}{F3}{Shift up}")
+; ^s::isearch("^p^s", "{F3}")
+; ^l::recenter_line()
+; ^i::indent_line()
+; ^+i::indent_line()
+; !;::comment_line("^p^/")
+; !+;::comment_line("^p^/")
+; ^b::return
+; ;; -----------
+; ;; C-x bindings
+; ;; -----------
+; ; ^x:: {
+; ;         hook := InputHook("L1", "{3}")
+; ;         hook.Start()
+; ;         hook.Wait()
+; ;         if (hook.EndKey == "3") {
+; ;                 split_window_vertically()
+; ;         }
+; ;         hook := ""
+; ; }
+
 
 ;; -------------
 ;; VS Code
@@ -43,12 +60,13 @@
 ;;
 ;; Control+p Control+/ : Text Editor : Toggle Line Comment
 
-#HotIf WinActive("ahk_exe Code.exe")
-^r::isearch("^f", "{Shift down}{Enter}{Shift up}")
-^s::isearch("^f", "{Enter}")
-!;::comment_line("^p^/")
-!+;::comment_line("^p^/")
-^b::return
+; #HotIf WinActive("ahk_exe Code.exe")
+; ^r::isearch("^f", "{Shift down}{Enter}{Shift up}")
+; ^s::isearch("^f", "{Enter}")
+; !;::comment_line("^p^/")
+; !+;::comment_line("^p^/")
+; ^b::return
+
 
 ;; -------------
 ;; Notepad++
@@ -56,10 +74,10 @@
 ;; Shortcut rebindings:
 ;;
 
-#HotIf WinActive("ahk_class Notepad++")
-^r::isearch("^!i", "{Shift down}{F3}{Shift up}")
-^s::isearch("^!i", "{F3}")
-!;::comment_line("^q")
-!+;::comment_line("^q")
+; #HotIf WinActive("ahk_class Notepad++")
+; ^r::isearch("^!i", "{Shift down}{F3}{Shift up}")
+; ^s::isearch("^!i", "{F3}")
+; !;::comment_line("^q")
+; !+;::comment_line("^q")
+; #HotIf
 
-#HotIf

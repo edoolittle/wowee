@@ -29,8 +29,8 @@
 ^+a::move_beginning_of_line()
 ^d::delete_char()
 ^v::scroll_down()
-^+w::kill_ring_cut()
-^w::return ;; only use ^w when selection active, i.e., shift is down; disable otherwise
+^+w::kill_ring_cut() ;; ctrl-w on keyboard sends this when selection active (shift down)
+^w::rkill_ring_cut() ;; just in case ... if this causes problems, replace with return
 ^y::yank()
 ^/::undo_only()
 ^k::kill_line()

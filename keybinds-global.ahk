@@ -7,6 +7,22 @@ next_workspace() {
         Click
 }
 
+open_browser() {
+        Run('cmd /c "start msedge --restore-last-session"', , "Hide")
+}
+
+open_emacs() {
+        Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
+}
+
+open_raise_outlook() {
+    if !ProcessExist("OUTLOOK.EXE") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
+    } else {
+        WinActivate "ahk_exe OUTLOOK.EXE"
+    }
+}
+
 prev_workspace() {
         Send("^#{Left}")
         Click
@@ -14,14 +30,6 @@ prev_workspace() {
 
 quit_window() {
         Send("!{F4}")
-}
-
-open_emacs() {
-        Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
-}
-
-open_browser() {
-        Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
 
 
@@ -57,16 +65,10 @@ CapsLock & u::prev_workspace()
 
 CapsLock & q::quit_window()
 
-;; ---------------------
-;; Start up Applications
-;; ---------------------
+;; ------------------
+;; Start Applications
+;; ------------------
 
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
-CapsLock & o::{
-    if !ProcessExist("OUTLOOK.EXE") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
-    } else {
-        WinActivate "ahk_exe OUTLOOK.EXE"
-    }
-}
+CapsLock & o::open_raise_outlook()

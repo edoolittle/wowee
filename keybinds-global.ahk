@@ -15,12 +15,44 @@ open_emacs() {
         Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
 }
 
-open_raise_outlook() {
-    if !ProcessExist("OUTLOOK.EXE") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
-    } else {
-        WinActivate "ahk_exe OUTLOOK.EXE"
+open_outlook_calendar() {
+    If !WinExist("Calendar - edoolittle") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:calendar"
     }
+    WinWait("Calendar - edoolittle")
+    WinActivate("Calendar - edoolittle")
+}
+
+open_outlook_contacts() {
+    If !WinExist("Contacts - edoolittle") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:contacts"
+    }
+    WinWait("Contacts - edoolittle")
+    WinActivate("Contacts - edoolittle")
+}
+
+open_outlook_drafts() {
+    If !WinExist("Drafts - edoolittle") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:drafts"
+    }
+    WinWait("Drafts - edoolittle")
+    WinActivate("Drafts - edoolittle")
+}
+
+open_outlook_inbox() {
+    If !WinExist("Inbox - edoolittle") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:inbox"
+    }
+    WinWait("Inbox - edoolittle")
+    WinActivate("Inbox - edoolittle")
+}
+
+open_outlook_sent() {
+    If !WinExist("Sent Items - edoolittle") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:sent%20items"
+    }
+    WinWait("Sent Items - edoolittle")
+    WinActivate("Sent Items - edoolittle")
 }
 
 prev_workspace() {
@@ -56,8 +88,8 @@ SetCapsLockState("AlwaysOff")
 ;; Workspace Switching
 ;; -------------------
 
-CapsLock & i::next_workspace()
-CapsLock & u::prev_workspace()
+CapsLock & j::next_workspace()
+CapsLock & k::prev_workspace()
 
 ;; ---------------
 ;; Window commands
@@ -69,6 +101,10 @@ CapsLock & q::quit_window()
 ;; Start Applications
 ;; ------------------
 
+Capslock & c::open_outlook_calendar()
+Capslock & d::open_outlook_drafts()
+Capslock & i::open_outlook_inbox()
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
-CapsLock & o::open_raise_outlook()
+CapsLock & o::open_outlook_contacts()
+CapsLock & s::open_outlook_sent()

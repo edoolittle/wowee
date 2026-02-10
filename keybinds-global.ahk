@@ -2,17 +2,12 @@
 ;; Local Functions
 ;; ---------------
 
-next_workspace() {
-        Send("^#{Right}")
-        Click
-}
-
 open_browser() {
-        Run('cmd /c "start msedge --restore-last-session"', , "Hide")
+    Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
 
 open_emacs() {
-        Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
+    Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
 }
 
 open_outlook_calendar() {
@@ -55,14 +50,20 @@ open_outlook_sent() {
     WinActivate("Sent Items - edoolittle")
 }
 
-prev_workspace() {
-        Send("^#{Left}")
-        Click
+window_quit() {
+    Send("!{F4}")
 }
 
-quit_window() {
-        Send("!{F4}")
+workspace_next() {
+    Send("^#{Right}")
+    Click
 }
+
+workspace_prev() {
+    Send("^#{Left}")
+    Click
+}
+
 
 
 ;; ----------------------------
@@ -88,14 +89,14 @@ SetCapsLockState("AlwaysOff")
 ;; Workspace Switching
 ;; -------------------
 
-CapsLock & j::next_workspace()
-CapsLock & k::prev_workspace()
+CapsLock & j::workspace_next()
+CapsLock & k::workspace_prev()
 
 ;; ---------------
 ;; Window commands
 ;; ---------------
 
-CapsLock & q::quit_window()
+CapsLock & q::window_quit()
 
 ;; ------------------
 ;; Start Applications

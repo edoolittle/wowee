@@ -102,10 +102,10 @@ CapsLock & q::window_quit()
 ;; Start Applications
 ;; ------------------
 
-Capslock & c::open_outlook_calendar()
+Capslock & a::open_outlook_calendar()
+CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()
 Capslock & i::open_outlook_inbox()
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
-CapsLock & o::open_outlook_contacts()
 CapsLock & s::open_outlook_sent()

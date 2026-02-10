@@ -57,9 +57,16 @@ CapsLock & u::prev_workspace()
 
 CapsLock & q::quit_window()
 
-;; --------------------
-;; Startup Applications
-;; --------------------
+;; ---------------------
+;; Start up Applications
+;; ---------------------
 
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
+CapsLock & o::{
+    if !ProcessExist("OUTLOOK.EXE") {
+        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE"
+    } else {
+        WinActivate "ahk_exe OUTLOOK.EXE"
+    }
+}

@@ -12,7 +12,7 @@ open_emacs() {
 
 open_outlook_calendar() {
     If !WinExist("Calendar - edoolittle") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:calendar"
+        Run('cmd /c "start Outlook-calendar.lnk"', , "Hide")
     }
     WinWait("Calendar - edoolittle")
     WinActivate("Calendar - edoolittle")
@@ -20,7 +20,7 @@ open_outlook_calendar() {
 
 open_outlook_contacts() {
     If !WinExist("Contacts - edoolittle") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:contacts"
+        Run('cmd /c "start Outlook-contacts.lnk"', , "Hide")
     }
     WinWait("Contacts - edoolittle")
     WinActivate("Contacts - edoolittle")
@@ -28,7 +28,7 @@ open_outlook_contacts() {
 
 open_outlook_drafts() {
     If !WinExist("Drafts - edoolittle") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:drafts"
+        Run('cmd /c "start Outlook-drafts.lnk"', , "Hide")
     }
     WinWait("Drafts - edoolittle")
     WinActivate("Drafts - edoolittle")
@@ -36,7 +36,7 @@ open_outlook_drafts() {
 
 open_outlook_inbox() {
     If !WinExist("Inbox - edoolittle") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:inbox"
+        Run('cmd /c "start Outlook-inbox.lnk"', , "Hide")
     }
     WinWait("Inbox - edoolittle")
     WinActivate("Inbox - edoolittle")
@@ -44,7 +44,7 @@ open_outlook_inbox() {
 
 open_outlook_sent() {
     If !WinExist("Sent Items - edoolittle") {
-        Run "C:\Program Files\Microsoft Office\root\Office16\OUTLOOK.EXE /select outlook:sent%20items"
+        Run('cmd /c "start Outlook-sent.lnk"', , "Hide")
     }
     WinWait("Sent Items - edoolittle")
     WinActivate("Sent Items - edoolittle")

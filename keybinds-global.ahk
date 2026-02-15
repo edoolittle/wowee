@@ -50,6 +50,14 @@ open_outlook_sent() {
     WinActivate("Sent Items - edoolittle")
 }
 
+open_zotero() {
+    If !WinExist(" - Zotero") {
+        Run('cmd /c "start Zotero.lnk"', , "Hide")
+    }
+    WinWait(" - Zotero")
+    WinActivate(" - Zotero")
+}
+
 window_quit() {
     Send("!{F4}")
 }
@@ -109,3 +117,4 @@ Capslock & i::open_outlook_inbox()
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
 CapsLock & s::open_outlook_sent()
+CapsLock & z::open_zotero()

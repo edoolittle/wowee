@@ -97,6 +97,8 @@ workspace_prev() {
 
 ;; see https://www.autohotkey.com/docs/v2/lib/A_MenuMaskKey.htm
 
+~LAlt::Send "{Blind}{vkE8}"
+~RAlt::Send "{Blind}{vkE8}"
 ~LWin::Send "{Blind}{vkE8}"
 ~RWin::Send "{Blind}{vkE8}"
 

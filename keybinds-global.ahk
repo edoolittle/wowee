@@ -50,6 +50,23 @@ open_outlook_sent() {
     WinActivate("Sent Items - edoolittle")
 }
 
+open_todoist() {
+    If !WinExist("ahk_exe Todoist.exe") {
+        Run('cmd /c "start Todoist.lnk"', , "Hide")
+    }
+    WinWait("ahk_exe Todoist.exe")
+    WinActivate("ahk_exe Todoist.exe")
+}
+
+open_todoist_quickadd() {
+    If !WinExist("ahk_exe Todoist.exe") {
+        Run('cmd /c "start Todoist.lnk"', , "Hide")
+    }
+    WinWait("ahk_exe Todoist.exe")
+    WinActivate("ahk_exe Todoist.exe")
+    send("q")
+}
+
 open_zotero() {
     If !WinExist(" - Zotero") {
         Run('cmd /c "start Zotero.lnk"', , "Hide")
@@ -93,28 +110,16 @@ SetCapsLockState("AlwaysOff")
 ;; Shift+CapsLock performs CapsLock function
 +CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
-;; -------------------
-;; Workspace Switching
-;; -------------------
-
-CapsLock & j::workspace_next()
-CapsLock & k::workspace_prev()
-
-;; ---------------
-;; Window commands
-;; ---------------
-
-CapsLock & q::window_quit()
-
-;; ------------------
-;; Start Applications
-;; ------------------
-
+CapsLock & Tab::open_todoist_quickadd()
 Capslock & a::open_outlook_calendar()
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()
 Capslock & i::open_outlook_inbox()
+CapsLock & j::workspace_next()
+CapsLock & k::workspace_prev()
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
+CapsLock & q::window_quit()
 CapsLock & s::open_outlook_sent()
+CapsLock & t::open_todoist()
 CapsLock & z::open_zotero()

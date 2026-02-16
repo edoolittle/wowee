@@ -5,6 +5,7 @@
 ;; -----------
 
 !b::backward_word()
+!d::delete_word()
 !f::forward_word()
 !v::scroll_up()
 !+w::kill_ring_save()

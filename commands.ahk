@@ -202,6 +202,10 @@ delete_char() {
     command_simple("{Del}", 1, 1)
 }
 
+delete_word() {
+    command_simple("+^{Right}{Del}", 1, 1)
+}
+
 ;; ------------------
 ;; newline and indent
 ;; ------------------

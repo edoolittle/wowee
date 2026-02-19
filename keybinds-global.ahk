@@ -75,6 +75,11 @@ open_zotero() {
     WinActivate(" - Zotero")
 }
 
+send_clipboard_to_mac() {
+    Clip := A_Clipboard
+    RunWait('powershell -command "Get-Clipboard | ssh ' EnvGet("MBPE") ' \"pbcopy\""')
+}
+
 window_quit() {
     Send("!{F4}")
 }
@@ -113,6 +118,7 @@ SetCapsLockState("AlwaysOff")
 +CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
 CapsLock & Tab::open_todoist_quickadd()
+CapsLock & Right::send_clipboard_to_mac()
 Capslock & a::open_outlook_calendar()
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()

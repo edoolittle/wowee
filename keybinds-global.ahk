@@ -10,6 +10,10 @@ open_emacs() {
     Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
 }
 
+open_gnome_terminal() {
+    Run('bash -c "gnome-terminal --working-directory=$HOME"', , "Hide")
+}
+
 open_outlook_calendar() {
     If !WinExist("Calendar - edoolittle") {
         Run('cmd /c "start Outlook-calendar.lnk"', , "Hide")
@@ -108,9 +112,9 @@ workspace_prev() {
 ~RWin::Send "{Blind}{vkE8}"
 
 
-;; ---------------------
-;; Hyper Key is CapsLock
-;; ---------------------
+;; ------------------
+;; Hyper Key Bindings
+;; ------------------
 
 ;; CapsLock off
 SetCapsLockState("AlwaysOff")
@@ -122,6 +126,7 @@ CapsLock & Right::send_clipboard_to_mac()
 Capslock & a::open_outlook_calendar()
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()
+Capslock & g::open_gnome_terminal()
 Capslock & i::open_outlook_inbox()
 CapsLock & j::workspace_prev()
 CapsLock & k::workspace_next()

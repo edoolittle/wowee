@@ -71,8 +71,8 @@ open_todoist_quickadd() {
         Run('cmd /c "start Todoist.lnk"', , "Hide")
     }
     WinWait("ahk_exe Todoist.exe")
-    WinActivate("ahk_exe Todoist.exe")
-    send("q")
+    ;;WinActivate("ahk_exe Todoist.exe")
+    send("^!#q")
 }
 
 open_zotero() {

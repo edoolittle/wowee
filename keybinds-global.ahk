@@ -88,8 +88,13 @@ open_zotero() {
 }
 
 send_clipboard_to_mac() {
-    Clip := A_Clipboard
-    RunWait('powershell -command "Get-Clipboard | ssh ' EnvGet("MBPE") ' \"pbcopy\""')
+    ;;Clip := A_Clipboard
+    RunWait('bash --rcfile=~/.bashrc -i -c "copy-to-mac"')
+}
+
+send_clipboard_to_monolith() {
+    ;;Clip := A_Clipboard
+    RunWait('bash --rcfile=~/.bashrc -i -c "copy-to-mono"')
 }
 
 window_quit() {
@@ -129,8 +134,9 @@ SetCapsLockState("AlwaysOff")
 ;; Shift+CapsLock performs CapsLock function
 +CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
+CapsLock & Down::send_clipboard_to_monolith()
 CapsLock & Tab::open_todoist_quickadd()
-CapsLock & Right::send_clipboard_to_mac()
+CapsLock & Up::send_clipboard_to_mac()
 Capslock & a::open_outlook_calendar()
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()

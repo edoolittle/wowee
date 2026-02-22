@@ -10,6 +10,10 @@ open_copilot() {
     Run('cmd /c "start Copilot.lnk"', , "Hide")
 }
 
+open_copilot_work() {
+    Run('cmd /c "start Copilot-M365.lnk"', , "Hide")
+}
+
 open_emacs() {
     Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
 }
@@ -140,4 +144,5 @@ CapsLock & p::open_copilot()
 CapsLock & q::window_quit()
 CapsLock & s::open_outlook_sent()
 CapsLock & t::open_todoist()
+CapsLock & w::open_copilot_work()
 CapsLock & z::open_zotero()

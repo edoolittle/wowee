@@ -6,6 +6,10 @@ open_browser() {
     Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
 
+open_copilot() {
+    Run('cmd /c "start Copilot.lnk"', , "Hide")
+}
+
 open_emacs() {
     Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
 }
@@ -132,6 +136,7 @@ CapsLock & j::workspace_prev()
 CapsLock & k::workspace_next()
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
+CapsLock & p::open_copilot()
 CapsLock & q::window_quit()
 CapsLock & s::open_outlook_sent()
 CapsLock & t::open_todoist()

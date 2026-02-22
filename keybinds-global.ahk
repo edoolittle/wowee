@@ -73,10 +73,11 @@ open_todoist() {
 open_todoist_quickadd() {
     If !WinExist("ahk_exe Todoist.exe") {
         Run('cmd /c "start Todoist.lnk"', , "Hide")
+        WinWait("ahk_exe Todoist.exe")
+        WinActivate("ahk_exe Todoist.exe")
+        WinWaitActive("ahk_exe Todoist.exe")
     }
-    WinWait("ahk_exe Todoist.exe")
-    ;;WinActivate("ahk_exe Todoist.exe")
-    send("^!#q")
+    send("^!#q") ;; this should be the same as Todoist setting
 }
 
 open_zotero() {

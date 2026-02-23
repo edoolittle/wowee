@@ -133,16 +133,16 @@ workspace_prev() {
 
 ;; CapsLock off
 SetCapsLockState("AlwaysOff")
-CapsLock::return
 ;; Shift+CapsLock performs CapsLock function
 +CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
 CapsLock & Down::send_clipboard_to_monolith()
-CapsLock & LShift::{
-    MsgBox("You pressed CapsLock + Left Shift!")
-    return
-}
-CapsLock & RShift::SetCapsLockState !GetKeyState("CapsLock", "T")
+; CapsLock & LShift::{
+;     MsgBox("You pressed CapsLock + Left Shift!")
+;     return
+; }
+; CapsLock::return
+; CapsLock & RShift::SetCapsLockState !GetKeyState("CapsLock", "T")
 CapsLock & Tab::open_todoist_quickadd()
 CapsLock & Up::send_clipboard_to_mac()
 Capslock & a::open_outlook_calendar()

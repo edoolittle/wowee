@@ -76,6 +76,7 @@ open_todoist_quickadd() {
         WinWait("ahk_exe Todoist.exe")
         WinActivate("ahk_exe Todoist.exe")
         WinWaitActive("ahk_exe Todoist.exe")
+        Sleep(200)
     }
     send("^!#q") ;; this should be the same as Todoist setting
 }

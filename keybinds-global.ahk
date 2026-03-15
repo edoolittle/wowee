@@ -2,6 +2,35 @@
 ;; Local Functions
 ;; ---------------
 
+open_anylist() {
+    url := "https://www.anylist.com/web" ; Change to your desired URL
+
+    try {
+        Run url  ; Opens in default browser
+
+        ; List of common browser executables in order of liklihood
+        browsers := ["msedge.exe", "firefox.exe", "chrome.exe", "brave.exe", "opera.exe"]
+
+        found := false
+        for exe in browsers {
+            if WinWait("ahk_exe " exe, , 5) { ; Wait up to 5 seconds for each
+                WinActivate  ; Bring browser to front
+                WinSetAlwaysOnTop true
+                Sleep 500
+                WinSetAlwaysOnTop false
+                found := true
+                break
+            }
+        }
+
+        if !found {
+            MsgBox "No browser window detected.", "Error", 48
+        }
+    } catch Error as e {
+        MsgBox "Failed to open URL:`n" url, "Error", 16
+    }
+}
+
 open_browser() {
     Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
@@ -134,15 +163,15 @@ workspace_prev() {
 ;; CapsLock off
 SetCapsLockState("AlwaysOff")
 ;; Shift+CapsLock performs CapsLock function
-+CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
+;+CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
+CapsLock::return
 CapsLock & Down::send_clipboard_to_monolith()
-; CapsLock & LShift::{
-;     MsgBox("You pressed CapsLock + Left Shift!")
-;     return
-; }
-; CapsLock::return
-; CapsLock & RShift::SetCapsLockState !GetKeyState("CapsLock", "T")
+CapsLock & LShift::{
+    MsgBox("You pressed CapsLock + Left Shift!")
+    return
+}
+CapsLock & RShift::SetCapsLockState !GetKeyState("CapsLock", "T")
 CapsLock & Tab::open_todoist_quickadd()
 CapsLock & Up::send_clipboard_to_mac()
 Capslock & a::open_outlook_calendar()
@@ -152,6 +181,7 @@ Capslock & g::open_gnome_terminal()
 Capslock & i::open_outlook_inbox()
 CapsLock & j::workspace_prev()
 CapsLock & k::workspace_next()
+CapsLock & l::open_anylist()
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
 CapsLock & p::open_copilot()

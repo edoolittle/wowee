@@ -31,7 +31,7 @@
 ^d::delete_char()
 ^v::scroll_down()
 ^+w::kill_ring_cut() ;; ^w on keyboard sends this when selection active (shift down)
-^w::rreturn          ;; ^w at other times should not close the app
+^w::return           ;; ^w at other times should not close the app
 ^y::yank()
 ^/::undo_only()
 ^k::kill_line()

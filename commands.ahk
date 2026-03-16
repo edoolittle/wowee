@@ -152,6 +152,42 @@ move_end_of_line() {
     command_motion("{End}", 0)
 }
 
+move_end_of_sentence() {
+    ; Save current clipboard
+    ClipSaved := ClipboardAll()
+    A_Clipboard := ""  ; Clear clipboard
+
+    ; Select text ahead (adjust 300 if needed)
+    Send("+{Right 300}")
+    Sleep(50)
+    Send("^c")
+
+    if !ClipWait(2.0) {
+        MsgBox("Could not read text ahead.")
+        A_Clipboard := ClipSaved
+        return
+    }
+
+    text := A_Clipboard
+
+    ; Regex: find . ! or ? followed by space, newline, or end of text
+    pos := RegExMatch(text, "([.!?])(\s|$)")
+
+    if (pos > 0) {
+        ; Move cursor back from selection end to just after punctuation
+        charsToMove := StrLen(text) - pos
+
+        ; move right once to switch off selection
+        Send("{Right}")
+        Send("{Left " charsToMove "}")
+    } else {
+        MsgBox("No sentence end found ahead.")
+    }
+
+    ; Restore clipboard
+    A_Clipboard := ClipSaved
+}
+
 beginning_of_buffer() {
     command_motion("^{Home}", 9)
 }

@@ -6,6 +6,7 @@
 
 !b::backward_word()
 !d::delete_word()
+!e::move_end_of_sentence()
 !f::forward_word()
 !v::scroll_up()
 !+w::kill_ring_save()

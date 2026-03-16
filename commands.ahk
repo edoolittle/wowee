@@ -161,6 +161,8 @@ move_end_of_sentence() {
     Send("+{Right 300}")
     Sleep(50)
     Send("^c")
+    ; move {Right} once to switch off selection ... doesn't move point
+    Send("{Right}")
 
     if !ClipWait(2.0) {
         MsgBox("Could not read text ahead.")
@@ -170,15 +172,21 @@ move_end_of_sentence() {
 
     text := A_Clipboard
 
-    ; Regex: find . ! or ? followed by space, newline, or end of text
-    pos := RegExMatch(text, "([.!?])(\s|$)")
+    ; Regex: find . ! ? } ) followed by space, newline, or end of text
+    pos := RegExMatch(text, "([.!?})])(\s|$)")
+
+    ; We need to count the number of carriage returns between pos and end
+    ; because a single {Left} moves over two characters if they are CR LF.
+    ; We count CR instead of LF because Unix text files have no CR.
+    countCR := 0
+    for , char in StrSplit(Substr(text,pos)) {
+        if (char = "`r")
+            countCR++
+    }
 
     if (pos > 0) {
         ; Move cursor back from selection end to just after punctuation
-        charsToMove := StrLen(text) - pos
-
-        ; move right once to switch off selection
-        Send("{Right}")
+        charsToMove := StrLen(text) - pos - countCR
         Send("{Left " charsToMove "}")
     } else {
         MsgBox("No sentence end found ahead.")

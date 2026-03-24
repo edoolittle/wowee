@@ -36,19 +36,32 @@ open_browser() {
 }
 
 open_copilot() {
+    ;; it seems only one Copilot window is open at a time so no need to check
+    ;; if !WinExist
     Run('cmd /c "start Copilot.lnk"', , "Hide")
 }
 
 open_copilot_work() {
+    ;; it seems only one Microsoft 365 Copilot window is open at a time so no
+    ;;  need to check if !WinExist
     Run('cmd /c "start Copilot-M365.lnk"', , "Hide")
 }
 
 open_emacs() {
-    Run('bash -c "emacsclient -c -n -a emacs"', , "Hide")
+    ;; e script will start emacs in daemon mode if not already started
+    Run('bash -c "/home/ejd/bin/e"', , "Hide")
 }
 
 open_gnome_terminal() {
     Run('bash -c "gnome-terminal --working-directory=$HOME"', , "Hide")
+}
+
+open_gnucash() {
+    If !WinExist("finance.gnucash") {
+        Run('cmd /c "start GnuCash.lnk"', , "Hide")
+    }
+    WinWait("finance.gnucash")
+    WinActivate("finance.gnucash")
 }
 
 open_outlook_calendar() {
@@ -105,7 +118,7 @@ open_todoist_quickadd() {
         WinWait("ahk_exe Todoist.exe")
         WinActivate("ahk_exe Todoist.exe")
         WinWaitActive("ahk_exe Todoist.exe")
-        Sleep(200)
+        Sleep(500)
     }
     send("^!#q") ;; this should be the same as Todoist setting
 }
@@ -174,6 +187,7 @@ CapsLock & LShift::{
 CapsLock & RShift::SetCapsLockState !GetKeyState("CapsLock", "T")
 CapsLock & Tab::open_todoist_quickadd()
 CapsLock & Up::send_clipboard_to_mac()
+CapsLock & $::open_gnucash()
 Capslock & a::open_outlook_calendar()
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()

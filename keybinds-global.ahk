@@ -49,7 +49,7 @@ open_copilot_work() {
 
 open_emacs() {
     ;; e script will start emacs in daemon mode if not already started
-    Run('bash -c "/home/ejd/bin/e"', , "Hide")
+    Run('bash -c "~/bin/e"', , "Hide")
 }
 
 open_gnome_terminal() {

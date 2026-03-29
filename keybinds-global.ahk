@@ -2,35 +2,6 @@
 ;; Local Functions
 ;; ---------------
 
-open_anylist() {
-    url := "https://www.anylist.com/web" ; Change to your desired URL
-
-    try {
-        Run url  ; Opens in default browser
-
-        ; List of common browser executables in order of liklihood
-        browsers := ["msedge.exe", "firefox.exe", "chrome.exe", "brave.exe", "opera.exe"]
-
-        found := false
-        for exe in browsers {
-            if WinWait("ahk_exe " exe, , 5) { ; Wait up to 5 seconds for each
-                WinActivate  ; Bring browser to front
-                WinSetAlwaysOnTop true
-                Sleep 500
-                WinSetAlwaysOnTop false
-                found := true
-                break
-            }
-        }
-
-        if !found {
-            MsgBox "No browser window detected.", "Error", 48
-        }
-    } catch Error as e {
-        MsgBox "Failed to open URL:`n" url, "Error", 16
-    }
-}
-
 open_browser() {
     Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
@@ -57,6 +28,7 @@ open_gnome_terminal() {
 }
 
 open_gnucash() {
+    open_url("https://www.simplii.com")
     If !WinExist("finance.gnucash") {
         Run('cmd /c "start GnuCash.lnk"', , "Hide")
     }
@@ -121,6 +93,33 @@ open_todoist_quickadd() {
         Sleep(500)
     }
     send("^!#q") ;; this should be the same as Todoist setting
+}
+
+open_url(url) {
+    try {
+        Run url  ; Opens in default browser
+
+        ; List of common browser executables in order of liklihood
+        browsers := ["msedge.exe", "firefox.exe", "chrome.exe", "brave.exe", "opera.exe"]
+
+        found := false
+        for exe in browsers {
+            if WinWait("ahk_exe " exe, , 5) { ; Wait up to 5 seconds for each
+                WinActivate  ; Bring browser to front
+                WinSetAlwaysOnTop true
+                Sleep 500
+                WinSetAlwaysOnTop false
+                found := true
+                break
+            }
+        }
+
+        if !found {
+            MsgBox "No browser window detected.", "Error", 48
+        }
+    } catch Error as e {
+        MsgBox "Failed to open URL:`n" url, "Error", 16
+    }
 }
 
 open_zotero() {
@@ -195,7 +194,7 @@ Capslock & g::open_gnome_terminal()
 Capslock & i::open_outlook_inbox()
 CapsLock & j::workspace_prev()
 CapsLock & k::workspace_next()
-CapsLock & l::open_anylist()
+CapsLock & l::open_url("https://www.anylist.com/web")
 CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
 CapsLock & p::open_copilot()

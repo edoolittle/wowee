@@ -104,6 +104,11 @@ Initial version
 * Quick Start / Installation / Usage
 
 1. **Install AutoHotKey**: Download and install AutoHotKey from [AutoHotKey's official website](https://www.autohotkey.com/).
+1a. Go through keybinds-global.ahk and remove hyper key bindings for applications
+    which are not installed.  In other cases, type Win+R, shell:appsfolder, and drag
+    an app .lnk file to a directory on your Windows path.  Then double click the .lnk
+    file to make sure it works; you may have to uncheck a box asking for permission to
+    run every time.
 2. **Run WOWEE**: Double-click on the `wowee.ahk` script to start WOWEE. Once running, Emacs commands will be available in your Windows environment.
 3. **Quit WOWEE**: To quit WOWEE, right-click the AutoHotKey icon in the task tray and select "Exit."
 

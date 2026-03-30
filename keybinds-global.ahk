@@ -36,17 +36,15 @@ open_gnucash() {
     WinActivate("finance.gnucash")
 }
 
-open_most_recent(dir) {
-    ;;dir := "C:\Path\To\Folder"   ; ← change this
-
+open_most_recent(pattern) {
     latestFile := ""
     latestTime := 0
 
-    for file in DirGetFiles(dir) {
-        t := FileGetTime(file, "M")   ; "M" = last modified time
+    Loop Files, pattern {
+        t := A_LoopFileTimeModified
         if (t > latestTime) {
             latestTime := t
-            latestFile := file
+            latestFile := A_LoopFilePath
         }
     }
 
@@ -209,7 +207,7 @@ CapsLock & Tab::open_todoist_quickadd()
 CapsLock & Up::send_clipboard_to_mac()
 CapsLock & $::open_gnucash()
 Capslock & a::open_outlook_calendar()
-Capslock & b::open_url("https://fnuniv365.sharepoint.com/sites/Finance2-Director/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FFinance2%2DDirector%2FShared%20Documents%2FDirector%2FBudget%2FBudget%20FY%202025%20and%202026%2FAcademic%20Programs%2F28%20%2D%20Research%20and%20Grad%20Studies&viewid=da70cd7f%2D6859%2D471e%2Da9a9%2D9c5c770a1f3c&FolderCTID=0x01200061D1BF629398E042BD78D332FA018A4A")
+Capslock & b::open_most_recent(EnvGet("USERPROFILE") "\OneDrive - FNUniv\Finance-Director - 28 - Research and Grad Studies\FY26\*.xlsx")
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()
 Capslock & g::open_gnome_terminal()

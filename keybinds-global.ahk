@@ -36,6 +36,27 @@ open_gnucash() {
     WinActivate("finance.gnucash")
 }
 
+open_most_recent(dir) {
+    ;;dir := "C:\Path\To\Folder"   ; ← change this
+
+    latestFile := ""
+    latestTime := 0
+
+    for file in DirGetFiles(dir) {
+        t := FileGetTime(file, "M")   ; "M" = last modified time
+        if (t > latestTime) {
+            latestTime := t
+            latestFile := file
+        }
+    }
+
+    if latestFile != "" {
+        Run latestFile
+    } else {
+        MsgBox "No files found in: " dir
+    }
+}
+
 open_outlook_calendar() {
     If !WinExist("Calendar - edoolittle") {
         Run('cmd /c "start Outlook-calendar.lnk"', , "Hide")

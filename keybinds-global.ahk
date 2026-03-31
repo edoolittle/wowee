@@ -2,6 +2,39 @@
 ;; Local Functions
 ;; ---------------
 
+;; Create a shortcut to the directory dir, placed in dir ... this may seem useless
+;; but is actually very handy for opening a local File Explorer window when viewing
+;; a OneDrive folder on the web.  As the local path may be computer dependent,
+;; the shortcut name contains the local ComputerName.
+create_self_lnk_in_dir(dir) {
+    ; Define the shortcut file path (on Desktop in this example)
+    shortcutPath := dir "\0" A_ComputerName "-ThisFolder.lnk"
+
+    ; Create the shortcut
+    FileCreateShortcut(
+        dir,           ; Target path
+        shortcutPath,  ; Shortcut file path
+        dir            ; "Start in" directory
+    )
+
+    MsgBox "Shortcut created at:`n" shortcutPath
+}
+
+;; Find the file path of an active File Explorer window.  That directory will be
+;; used as "dir" in the create_self_lnk_in_dir() function, and may be used by
+;; other functions too.
+;; See https://www.autohotkey.com/boards/viewtopic.php?p=387113#p387113
+explorerGetPath(hwnd := 0) { 
+    Static winTitle := 'ahk_class CabinetWClass'
+    hWnd ? explorerHwnd := WinExist(winTitle ' ahk_id ' hwnd)
+    : ((!explorerHwnd := WinActive(winTitle)) && explorerHwnd := WinExist(winTitle))
+    If explorerHwnd
+        For window in ComObject('Shell.Application').Windows
+    Try If window && window.hwnd && window.hwnd = explorerHwnd
+        Return window.Document.Folder.Self.Path
+    Return False
+}
+
 open_browser() {
     Run('cmd /c "start msedge --restore-last-session"', , "Hide")
 }
@@ -111,14 +144,14 @@ open_todoist_quickadd() {
         WinWaitActive("ahk_exe Todoist.exe")
         Sleep(500)
     }
-    send("^!#q") ;; this should be the same as Todoist setting
+    send("^!#q") ;; this should be the same as Todoist setting for quick task
 }
 
 open_url(url) {
     try {
         Run url  ; Opens in default browser
 
-        ; List of common browser executables in order of liklihood
+        ; List of common browser executables in order of likelihood
         browsers := ["msedge.exe", "firefox.exe", "chrome.exe", "brave.exe", "opera.exe"]
 
         found := false
@@ -223,3 +256,7 @@ CapsLock & s::open_outlook_sent()
 CapsLock & t::open_todoist()
 CapsLock & w::open_copilot_work()
 CapsLock & z::open_zotero()
+
+#HotIf WinActive('ahk_class CabinetWClass')
+CapsLock & x::create_self_lnk_in_dir(explorerGetPath())
+#HotIf

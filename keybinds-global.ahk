@@ -51,6 +51,20 @@ open_copilot_work() {
     Run('cmd /c "start Copilot-M365.lnk"', , "Hide")
 }
 
+open_create_expense_claim() {
+    root := EnvGet("USERPROFILE") "\OneDrive\Claims"
+    result := select_or_create_folder(root)
+    if result = "" {
+        MsgBox "User cancelled."
+    }
+    else {
+        if result.New {
+            FileCopy root "\BlankForms\*.*", result.Path, false
+        }
+        Run result.Path
+    }
+}
+
 open_emacs() {
     ;; e script will start emacs in daemon mode if not already started
     Run('bash -c "~/bin/e"', , "Hide")
@@ -73,7 +87,7 @@ open_most_recent(pattern) {
     latestFile := ""
     latestTime := 0
 
-    Loop Files, pattern {
+    Loop Files, pattern, "R" {
         t := A_LoopFileTimeModified
         if (t > latestTime) {
             latestTime := t
@@ -126,6 +140,15 @@ open_outlook_sent() {
     }
     WinWait("Sent Items - edoolittle")
     WinActivate("Sent Items - edoolittle")
+}
+
+open_research_project() {
+    PN := InputBox("Please enter a project number.", "Project Number")
+    if PN.Result = "Cancel"
+        open_most_recent(EnvGet("USERPROFILE") "\OneDrive - FNUniv\Administration\ADR\Financial\*Consolidated*.xlsx")
+    else
+        open_most_recent(EnvGet("USERPROFILE") "\OneDrive - FNUniv\Administration\ADR\Financial\*#" PN.Value "*.xlsx")
+
 }
 
 open_todoist() {
@@ -192,6 +215,31 @@ send_clipboard_to_monolith() {
     RunWait('bash --rcfile=~/.bashrc -i -c "copy-to-mono"')
 }
 
+select_or_create_folder(root, title := "Select or Create Folder") {
+    ; Ensure root exists
+    if !DirExist(root)
+        DirCreate(root)
+    ; Let user pick a folder
+    selected := FileSelect("D8", root, title)
+    if selected {
+        ; User picked an existing folder
+        return { Path: selected, New: false }
+    }
+    ; User cancelled → ask for new folder name
+    name := InputBox("Enter name for new folder:", "Create Folder")
+    if name.Result != "OK"
+        return ""  ; user cancelled again
+    ; Sanitize folder name
+    safe := RegExReplace(name.Value, '[\/:*?"<>|]', "_") ; " emacs ahk colorizer broken
+    newPath := root "\" safe
+    ; Check if folder existed before creation
+    existedBefore := DirExist(newPath)
+    ; Create if needed
+    if !existedBefore
+        DirCreate(newPath)
+    return { Path: newPath, New: !existedBefore }
+}
+
 window_quit() {
     Send("!{F4}")
 }
@@ -243,6 +291,7 @@ Capslock & a::open_outlook_calendar()
 Capslock & b::open_most_recent(EnvGet("USERPROFILE") "\OneDrive - FNUniv\Finance-Director - 28 - Research and Grad Studies\FY26\*.xlsx")
 CapsLock & c::open_outlook_contacts()
 Capslock & d::open_outlook_drafts()
+Capslock & e::open_create_expense_claim()
 Capslock & g::open_gnome_terminal()
 Capslock & i::open_outlook_inbox()
 CapsLock & j::workspace_prev()
@@ -252,6 +301,7 @@ CapsLock & m::open_emacs()
 CapsLock & n::open_browser()
 CapsLock & p::open_copilot()
 CapsLock & q::window_quit()
+CapsLock & r::open_research_project()
 CapsLock & s::open_outlook_sent()
 CapsLock & t::open_todoist()
 CapsLock & w::open_copilot_work()

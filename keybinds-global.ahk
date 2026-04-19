@@ -119,26 +119,26 @@ open_outlook_sent() {
     WinActivate("Sent Items - edoolittle")
 }
 
- open_search() {
-     clipSaved := ClipboardAll()
-     A_Clipboard := ""
-     
-     Send "^c"
-     if !ClipWait(0.5) {
-         A_Clipboard := clipSaved
-         return
-     } 
- 
-     query := A_Clipboard
-     A_Clipboard := clipSaved
- 
- 
-     if query = ""
-         query := InputBox("Search for:", "Search").Value
- 
-     if query != ""
-         Run "https://www.google.com/search?q=" uri_encode(query)
- }
+open_search() {
+    clipSaved := ClipboardAll()
+    A_Clipboard := ""
+
+    Send "^c"
+    if !ClipWait(0.5) {
+        A_Clipboard := clipSaved
+        return
+    } 
+
+    query := A_Clipboard
+    A_Clipboard := clipSaved
+
+
+    if query = ""
+        query := InputBox("Search for:", "Search").Value
+
+    if query != ""
+        Run "https://www.google.com/search?q=" uri_encode(query)
+}
 
 open_todoist() {
     If !WinExist("ahk_exe Todoist.exe") {
@@ -229,28 +229,28 @@ select_or_create_folder(root, title := "Select or Create Folder") {
     return { Path: newPath, New: !existedBefore }
 }
 
- ;; see https://www.autohotkey.com/boards/viewtopic.php?style=1&t=116056
- uri_encode(str, sExcepts := "-_.", enc := "UTF-8") { 
-	hex := "00", func := "msvcrt\swprintf"
- 	buff := Buffer(StrPut(str, enc)), StrPut(str, buff, enc)   ;转码
- 	encoded := ""
- 	Loop {
- 		if (!b := NumGet(buff, A_Index - 1, "UChar"))
- 			break
- 		ch := Chr(b)
- 		; "is alnum" is not used because it is locale dependent.
- 		if (b >= 0x41 && b <= 0x5A ; A-Z
- 			|| b >= 0x61 && b <= 0x7A ; a-z
- 			|| b >= 0x30 && b <= 0x39 ; 0-9
- 			|| InStr(sExcepts, Chr(b), true))
- 			encoded .= Chr(b)
- 		else {
- 			DllCall(func, "Str", hex, "Str", "%%%02X", "UChar", b, "Cdecl")
- 			encoded .= hex
- 		}
- 	}
- 	return encoded
- }
+;; see https://www.autohotkey.com/boards/viewtopic.php?style=1&t=116056
+uri_encode(str, sExcepts := "-_.", enc := "UTF-8") { 
+    hex := "00", func := "msvcrt\swprintf"
+    buff := Buffer(StrPut(str, enc)), StrPut(str, buff, enc)   ;转码
+    encoded := ""
+    Loop {
+        if (!b := NumGet(buff, A_Index - 1, "UChar"))
+            break
+        ch := Chr(b)
+        ; "is alnum" is not used because it is locale dependent.
+        if (b >= 0x41 && b <= 0x5A ; A-Z
+            || b >= 0x61 && b <= 0x7A ; a-z
+            || b >= 0x30 && b <= 0x39 ; 0-9
+            || InStr(sExcepts, Chr(b), true))
+            encoded .= Chr(b)
+        else {
+            DllCall(func, "Str", hex, "Str", "%%%02X", "UChar", b, "Cdecl")
+            encoded .= hex
+        }
+    }
+    return encoded
+}
 
 window_quit() {
     Send("!{F4}")

@@ -229,9 +229,32 @@ select_or_create_folder(root, title := "Select or Create Folder") {
     return { Path: newPath, New: !existedBefore }
 }
 
-uri_encode(str) {
-    return StrReplace(uri_component_encode(str), "+", "%20")
+;; see https://www.autohotkey.com/boards/viewtopic.php?style=1&t=116056
+uri_encode(str, sExcepts := "-_.", enc := "UTF-8") {
+	hex := "00", func := "msvcrt\swprintf"
+	buff := Buffer(StrPut(str, enc)), StrPut(str, buff, enc)   ;转码
+	encoded := ""
+	Loop {
+		if (!b := NumGet(buff, A_Index - 1, "UChar"))
+			break
+		ch := Chr(b)
+		; "is alnum" is not used because it is locale dependent.
+		if (b >= 0x41 && b <= 0x5A ; A-Z
+			|| b >= 0x61 && b <= 0x7A ; a-z
+			|| b >= 0x30 && b <= 0x39 ; 0-9
+			|| InStr(sExcepts, Chr(b), true))
+			encoded .= Chr(b)
+		else {
+			DllCall(func, "Str", hex, "Str", "%%%02X", "UChar", b, "Cdecl")
+			encoded .= hex
+		}
+	}
+	return encoded
 }
+
+;uri_encode(str) {
+;    return StrReplace(uri_component_encode(str), "+", "%20")
+;}
 
 uri_component_encode(str) {
     static chars := "0123456789ABCDEF"
@@ -263,7 +286,23 @@ workspace_prev() {
 }
 
 
-#Include private.ahk
+;; Stub functions which will likely require personal information  ...
+;; these can be filled out here, or copied to private.ahk and filled out there.
+;; They cannot appear twice or an error will occur.
+;open_budget() {
+;}
+;open_create_expense_claim() {
+;}
+;open_gnucash() {
+;}
+;open_list() {
+;}
+;open_research_project() {
+;}
+;; The file private.ahk contains private info like work directories,
+;; personal URLs, etc.
+#Include "*i private.ahk"
+
 
 ;; ----------------------------
 ;; Alt Keys Don't Activate Menu

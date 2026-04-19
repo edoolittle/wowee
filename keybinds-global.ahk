@@ -119,6 +119,27 @@ open_outlook_sent() {
     WinActivate("Sent Items - edoolittle")
 }
 
+open_search() {
+    clipSaved := ClipboardAll()
+    A_Clipboard := ""
+    
+    Send "^c"
+    if !ClipWait(0.5) {
+        A_Clipboard := clipSaved
+        return
+    }
+
+    query := A_Clipboard
+    A_Clipboard := clipSaved
+
+
+    if query = ""
+        query := InputBox("Search for:", "Search").Value
+
+    if query != ""
+        Run "https://www.google.com/search?q=" uri_encode(query)
+}
+
 open_todoist() {
     If !WinExist("ahk_exe Todoist.exe") {
         Run('cmd /c "start Todoist.lnk"', , "Hide")
@@ -208,6 +229,25 @@ select_or_create_folder(root, title := "Select or Create Folder") {
     return { Path: newPath, New: !existedBefore }
 }
 
+uri_encode(str) {
+    return StrReplace(uri_component_encode(str), "+", "%20")
+}
+
+uri_component_encode(str) {
+    static chars := "0123456789ABCDEF"
+    out := ""
+    loop parse str {
+        c := Ord(A_LoopField)
+        if (c >= 0x30 && c <= 0x39)     ; 0-9
+         || (c >= 0x41 && c <= 0x5A)     ; A-Z
+         || (c >= 0x61 && c <= 0x7A)     ; a-z
+            out .= Chr(c)
+        else
+            out .= "%" chars[(c >> 4) + 1] chars[(c & 15) + 1]
+    }
+    return out
+}
+
 window_quit() {
     Send("!{F4}")
 }
@@ -253,6 +293,8 @@ CapsLock & RShift::SetCapsLockState !GetKeyState("CapsLock", "T")
 CapsLock & Tab::open_todoist_quickadd()
 CapsLock & Up::send_clipboard_to_mac()
 CapsLock & $::open_gnucash()
+CapsLock & ?::open_search()
+
 Capslock & a::open_outlook_calendar()
 Capslock & b::open_budget()
 CapsLock & c::open_outlook_contacts()

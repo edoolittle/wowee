@@ -167,7 +167,7 @@ open_todoist_quickadd() {
         WinWait("ahk_exe Todoist.exe")
         WinActivate("ahk_exe Todoist.exe")
         WinWaitActive("ahk_exe Todoist.exe")
-        Sleep(500)
+        Sleep(2000) ;; todoist sometimes has to think for a while before quick task ready
     }
     send("^!#q") ;; this should be the same as Todoist setting for quick task
 }

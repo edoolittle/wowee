@@ -120,24 +120,37 @@ open_outlook_sent() {
 }
 
 open_search() {
-    clipSaved := ClipboardAll()
+    ; Save existing clipboard
+    oldClip := A_Clipboard
+
+    ; Try to copy selected text
     A_Clipboard := ""
-
     Send "^c"
-    if !ClipWait(0.5) {
-        A_Clipboard := clipSaved
-        return
-    } 
+    ClipWait 0.25
 
-    query := A_Clipboard
-    A_Clipboard := clipSaved
+    text := Trim(A_Clipboard)
 
+    ; Restore clipboard immediately
+    A_Clipboard := oldClip
 
-    if query = ""
-        query := InputBox("Search for:", "Search").Value
+    ; If nothing was selected, prompt the user
+    if !text {
+        ib := InputBox("Enter search text:", "Search")
+        if ib.Result = "Cancel"
+            return
+        text := ib.Value
+        if !text
+            return
+    }
 
-    if query != ""
-        Run "https://www.google.com/search?q=" uri_encode(query)
+    ; Simple URL encoding
+    ;query := StrReplace(text, " ", "+")
+
+    ; URI encoding
+    query := uri_encode(text)
+
+    ;Run "https://www.bing.com/search?q=" query
+    Run "https://www.google.com/search?q=" query
 }
 
 open_todoist() {
